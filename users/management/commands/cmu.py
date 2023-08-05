@@ -7,11 +7,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         user = User.objects.create(
-            email='admin2@sky.pro',
+            email='iiiskhakov1990@mail.com',
             first_name='Admin',
             last_name='SkyPro',
             is_staff=True,
-            is_superuser=True,
+            is_superuser=False,
         )
 
         user.set_password('123456')
