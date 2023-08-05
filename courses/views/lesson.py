@@ -13,7 +13,7 @@ class LessonCreateAPIView(generics.CreateAPIView):
 
 class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
-    queryset = Lesson.objects.all()
+    # queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
     #  Если в settings присутствует
     #  'DEFAULT_PERMISSION_CLASSES': [
@@ -28,14 +28,24 @@ class LessonListAPIView(generics.ListAPIView):
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
-    queryset = Lesson.objects.all()
+    # queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
-    queryset = Lesson.objects.all()
+    # queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
