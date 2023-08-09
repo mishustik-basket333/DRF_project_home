@@ -1,20 +1,28 @@
 from rest_framework import generics
 
 from courses.models import Lesson
+from courses.pagination import LessonPagination
 from courses.permissions import IsModeratorPermission, IsSuperUserPermission
 from courses.serializers.lesson import LessonSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
-    permission_classes = [IsSuperUserPermission]
+    # permission_classes = [IsSuperUserPermission]
+    # если тестируем
+    permission_classes = [AllowAny]
 
 
 class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
+    pagination_class = LessonPagination
     # queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    # permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+    # если тестируем
+    permission_classes = [AllowAny]
+
     #  Если в settings присутствует
     #  'DEFAULT_PERMISSION_CLASSES': [
     #      'rest_framework.permissions.AllowAny',

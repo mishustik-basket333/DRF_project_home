@@ -9,6 +9,7 @@ from courses.views.lesson import LessonCreateAPIView, LessonListAPIView, LessonR
 
 from courses.views.payment import PaymentCreateAPIView, PaymentListAPIView, PaymentRetrieveAPIView, \
     PaymentUpdateAPIView, PaymentDestroyAPIView
+from courses.views.subscription import SubscriptionCreateAPIView, SubscriptionDeleteAPIView
 
 app_name = CoursesConfig.name
 
@@ -31,4 +32,8 @@ urlpatterns = [
     path('payment/<int:pk>/', PaymentRetrieveAPIView.as_view(), name='payment-one'),
     path('payment/update/<int:pk>/', PaymentUpdateAPIView.as_view(), name='payment-update'),
     path('payment/delete/<int:pk>/', PaymentDestroyAPIView.as_view(), name='payment-delete'),
+
+    # Subscription
+    path('subscription/create/', SubscriptionCreateAPIView.as_view(), name='subscription-create'),
+    path('subscription/delete/<int:pk>/', SubscriptionDeleteAPIView.as_view(), name='subscription-delete'),
 ] + router.urls
