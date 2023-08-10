@@ -11,10 +11,10 @@ class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
 
     # если НЕ тестируем
-    # permission_classes = [IsSuperUserPermission]
+    permission_classes = [IsSuperUserPermission]
 
     # если тестируем
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
 
 
 class LessonListAPIView(generics.ListAPIView):
@@ -22,15 +22,16 @@ class LessonListAPIView(generics.ListAPIView):
     pagination_class = LessonPagination
 
     # если НЕ тестируем
-    # permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
-    # def get_queryset(self):
-    #     if self.request.user.is_staff or self.request.user.is_superuser:
-    #         return Lesson.objects.all()
-    #     return Lesson.objects.filter(owner=self.request.user)
+    permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
     # если тестируем
-    permission_classes = [AllowAny]
-    queryset = Lesson.objects.all()
+    # permission_classes = [AllowAny]
+    # queryset = Lesson.objects.all()
 
     #  Если в settings присутствует
     #  'DEFAULT_PERMISSION_CLASSES': [
@@ -38,39 +39,36 @@ class LessonListAPIView(generics.ListAPIView):
     #   ]
 
 
-
-
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
 
     # если НЕ тестируем
-    # permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+    permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
     # если тестируем
-    permission_classes = [AllowAny]
-    queryset = Lesson.objects.all()
-
-    # def get_queryset(self):
-    #     if self.request.user.is_staff or self.request.user.is_superuser:
-    #         return Lesson.objects.all()
-    #     return Lesson.objects.filter(owner=self.request.user)
+    # permission_classes = [AllowAny]
+    # queryset = Lesson.objects.all()
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
 
     # если НЕ тестируем
-    # permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
-    # def get_queryset(self):
-    #     if self.request.user.is_staff or self.request.user.is_superuser:
-    #         return Lesson.objects.all()
-    #     return Lesson.objects.filter(owner=self.request.user)
+    permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
     # если тестируем
-    permission_classes = [AllowAny]
-    queryset = Lesson.objects.all()
-
-
+    # permission_classes = [AllowAny]
+    # queryset = Lesson.objects.all()
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
@@ -78,10 +76,7 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
     queryset = Lesson.objects.all()
 
     # если НЕ тестируем
-    # permission_classes = [IsSuperUserPermission]
+    permission_classes = [IsSuperUserPermission]
 
     # если тестируем
-    permission_classes = [AllowAny]
-
-
-
+    # permission_classes = [AllowAny]
