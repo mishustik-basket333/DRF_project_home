@@ -4,24 +4,19 @@ from courses.models import Lesson
 from courses.pagination import LessonPagination
 from courses.permissions import IsModeratorPermission, IsSuperUserPermission
 from courses.serializers.lesson import LessonSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
 
-    # если НЕ тестируем
     permission_classes = [IsSuperUserPermission]
-
-    # если тестируем
-    # permission_classes = [AllowAny]
 
 
 class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
     pagination_class = LessonPagination
 
-    # если НЕ тестируем
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
 
     def get_queryset(self):
@@ -29,8 +24,6 @@ class LessonListAPIView(generics.ListAPIView):
             return Lesson.objects.all()
         return Lesson.objects.filter(owner=self.request.user)
 
-    # если тестируем
-    # permission_classes = [AllowAny]
     # queryset = Lesson.objects.all()
 
     #  Если в settings присутствует
@@ -42,7 +35,6 @@ class LessonListAPIView(generics.ListAPIView):
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
 
-    # если НЕ тестируем
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
 
     def get_queryset(self):
@@ -50,15 +42,12 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
             return Lesson.objects.all()
         return Lesson.objects.filter(owner=self.request.user)
 
-    # если тестируем
-    # permission_classes = [AllowAny]
     # queryset = Lesson.objects.all()
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
 
-    # если НЕ тестируем
     permission_classes = [IsAuthenticated | IsModeratorPermission | IsSuperUserPermission]
 
     def get_queryset(self):
@@ -66,8 +55,6 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
             return Lesson.objects.all()
         return Lesson.objects.filter(owner=self.request.user)
 
-    # если тестируем
-    # permission_classes = [AllowAny]
     # queryset = Lesson.objects.all()
 
 
@@ -75,8 +62,4 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
 
-    # если НЕ тестируем
     permission_classes = [IsSuperUserPermission]
-
-    # если тестируем
-    # permission_classes = [AllowAny]

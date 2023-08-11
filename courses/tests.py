@@ -12,7 +12,7 @@ class LessonTestCase(APITestCase):
         """Создание тестового урока"""
 
         self.lesson = Lesson.objects.create(name="test")
-        self.user = User.objects.create(email='test@example.com', password='test')
+        self.user = User.objects.create(email='test@example.com', password='test', is_superuser=True, is_staff=True)
         self.client.force_authenticate(user=self.user)
 
     def test_1_create_lesson(self):
@@ -96,7 +96,7 @@ class CourseTestCase(APITestCase):
         """Создание тестового курса"""
 
         self.course = Course.objects.create(name="test")
-        self.user = User.objects.create(email='test@example.com', password='test')
+        self.user = User.objects.create(email='test@example.com', password='test', is_superuser=True, is_staff=True)
         self.client.force_authenticate(user=self.user)
 
     def test_1_create_course(self):
